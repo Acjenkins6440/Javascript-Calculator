@@ -4,12 +4,12 @@
   "description": "Simple javascript calculator ported from Codepen.io",
   "main": "index.js",
   "scripts": {
-    "start": "serve .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Acjenkins6440/Javascript-Calculator.git"
+    "url": "git+https://github.com/Acjenkins6440/Javascript-Calculator/"
   },
   "author": "Alex Jenkins",
   "license": "ISC",
@@ -17,9 +17,11 @@
     "url": "https://github.com/Acjenkins6440/Javascript-Calculator/issues"
   },
   "homepage": "https://github.com/Acjenkins6440/Javascript-Calculator#readme",
+  "devDependencies": {
+    "serve": "^6.0.1"
+  },
   "dependencies": {
     "jquery": "^3.2.1",
-    "serve": "^6.0.3",
     "typeface-orbitron": "0.0.31"
   }
 }

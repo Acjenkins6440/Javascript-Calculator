@@ -7,6 +7,9 @@ var numbers = [];
 var opers = [];
 var answer = 0;
 //function that takes keypresses and puts them into the displays
+$(document).ready(function(){
+  alert("you've got mail");
+}
 var execute = function(){
   $(".top").text(total);
   if (bottotal + extra == 0){
