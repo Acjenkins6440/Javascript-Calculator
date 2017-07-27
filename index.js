@@ -1,3 +1,22 @@
+
+$(document).ready(function(){
+  alert("you've got mail");
+  bindClickHandlers();
+});
+
+function bindClickHandlers(){
+  $(".num").click(onNumberClicked);
+  //operators
+  $(".oper").click(onOperatorClicked);
+  $("#divide").click(onDivideClicked);
+  $("#times").click(onTimesClicked);
+  //equals button
+  $(".equals").click(onEqualsClicked);
+  //clear buttons
+  $("#AC").click(onACClicked);
+  $("#C").click(onCClicked);
+}
+
 var total = 0;
 var bottotal="";
 var extra = '';
@@ -6,13 +25,12 @@ var equation = '';
 var numbers = [];
 var opers = [];
 var answer = 0;
+
 //function that takes keypresses and puts them into the displays
 function big(){
   alert('hey');
 }
-$(document).ready(function(){
-  alert("you've got mail");
-}
+
 var execute = function(){
   $(".top").text(total);
   if (bottotal + extra == 0){
@@ -24,7 +42,33 @@ var execute = function(){
 /*if display is too long, digit max reached.
 if decimal isn't the next character, replace 0 with new keypress
 otherwise add keypress to display*/
-$(".num").click(function(){
+
+var neweq = function(x){
+  for (i = 0; i<x.length; i++){
+    if (x[i] == '/' || x[i] == '*' || x[i] == '+' || x[i] == '-'){
+      opers.push(x[i]);
+      numbers.push(x.slice(0,i));
+      x = x.slice(i+1);
+      i = 0;
+    }
+  }
+  numbers.push(x);
+}
+var doTheMath = function(op, num1, num2){
+  switch(op){
+    case '+':
+    return Number(Math.round((num1 + num2)+'e2')+'e-2');
+    case '-':
+    return Number(Math.round((num1 - num2)+'e2')+'e-2');
+    case '/':
+    return Number(Math.round((num1 / num2)+'e2')+'e-2');
+    case '*':
+    return Number(Math.round((num1 * num2)+'e2')+'e-2');
+  }
+}
+
+function onNumberClicked(e){
+  console.log('>>> onClick: ', e)
   text = $(this).text();
   if(total.toString().length == 9){
     total = 0;
@@ -40,10 +84,8 @@ $(".num").click(function(){
   }
   else {total += text; extra += text;}
   execute();
-});
-
-//operators
-$("#divide").click(function(){
+}
+function onDivideClicked(){
   text = '/';
 
   if(extra == '+' || extra == "*" || extra == "-" || extra == "/"){
@@ -59,24 +101,8 @@ $("#divide").click(function(){
   }
   execute();
   total = 0;
-});
-$("#times").click(function(){
-  text = '*';
-   if(extra == '+' || extra == "*" || extra == "-" || extra == "/"){
-    extra = text;
-  }
-  else if(total != 0 && bottotal + extra != 0){
-    total = text;
-    bottotal += extra;
-    extra = text;
-  }
-  else{
-    $(".bottom").text('0');
-  }
-  execute();
-  total = 0;
-});
-$(".oper").click(function(){
+}
+function onOperatorClicked(){
   text = $(this).text();
    if(extra == '+' || extra == "*" || extra == "-" || extra == "/"){
     extra = text;
@@ -91,9 +117,8 @@ $(".oper").click(function(){
   }
   execute();
   total = 0;
-});
-//equals button
-$(".equals").click(function(){
+}
+function onEqualsClicked(){
   var equation = bottotal + extra;
   //do indexOf to find each operation,  do one array of all the numbers and one array of all the operations.
   neweq(equation);
@@ -120,39 +145,32 @@ $(".equals").click(function(){
   numbers = [];
   opers = [];
   answer = 0;
-});
-var neweq = function(x){
-  for (i = 0; i<x.length; i++){
-    if (x[i] == '/' || x[i] == '*' || x[i] == '+' || x[i] == '-'){
-      opers.push(x[i]);
-      numbers.push(x.slice(0,i));
-      x = x.slice(i+1);
-      i = 0;
-    }
+}
+function onTimesClicked(){
+  text = '*';
+   if(extra == '+' || extra == "*" || extra == "-" || extra == "/"){
+    extra = text;
   }
-  numbers.push(x);
+  else if(total != 0 && bottotal + extra != 0){
+    total = text;
+    bottotal += extra;
+    extra = text;
+  }
+  else{
+    $(".bottom").text('0');
+  }
+  execute();
+  total = 0;
 }
-var doTheMath = function(op, num1, num2){
-  switch(op){
-    case '+':
-      return Number(Math.round((num1 + num2)+'e2')+'e-2');
-    case '-':
-      return Number(Math.round((num1 - num2)+'e2')+'e-2');
-    case '/':
-      return Number(Math.round((num1 / num2)+'e2')+'e-2');
-    case '*':
-      return Number(Math.round((num1 * num2)+'e2')+'e-2');
-           }
-}
-//clear buttons
-$("#AC").click(function(){
+
+function onACClicked(){
   total = 0;
   bottotal = '';
   extra = '';
   execute();
   $(".bottom").text('0');
-});
-$("#C").click(function(){
+}
+function onCClicked(){
   if(bottotal == ''){
     total = 0;
     bottotal = '';
@@ -172,4 +190,4 @@ $("#C").click(function(){
     extra = '';
     execute();
   }
-});
+}
