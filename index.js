@@ -28,12 +28,17 @@ var answer = 0;
 //function that takes keypresses and puts them into the displays
 
 var execute = function(){
+  if($(".bottom").text().length > 26 || bottotal == "Digit Maximum Reached"){
+    $(".bottom").text('Digit Maximum Reached');
+    bottotal = '';
+    extra = '';
+    total = 0;
+  }
   $(".top").text(total);
   if (bottotal + extra == 0){
     $(".bottom").text('0');
   }
   $(".bottom").text(bottotal + extra);
-  console.log($(".bottom").text());
 }
 /*if display is too long, digit max reached.
 if decimal isn't the next character, replace 0 with new keypress
@@ -69,6 +74,7 @@ function onNumberClicked(e){
   if(total.toString().length == 9){
     total = 0;
     bottotal = "Digit Maximum Reached";
+    extra = '';
   }
   else if(total === 0 && text != '.'){
     total = text;
